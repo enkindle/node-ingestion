@@ -19,9 +19,12 @@ const path = require('path');
 const folderPath = './' + ooaConfig.watchFolder + "/*" + ooaConfig.fileType;
 const fs = require('fs');
 const fileFolder = './' + ooaConfig.watchFolder + '/';
-const xmlParser = require('xml2js').parseString;
+//const xmlParser = require('xml2js').parseString;
+const gatedArrGenerator = require('./components/gatedgenerator.js').gatedArray;
 logger.info('app started');
-logger.info(fileFolder);
+
+let gatedPercent = 10;
+let batchArr = [1,2,3,4,5];
 
 // Use chokidar to watch the uploads folder for incoming files
 const ooaWatcher = chokidar.watch(folderPath, {
@@ -29,11 +32,16 @@ const ooaWatcher = chokidar.watch(folderPath, {
 	ignoreInitial: true
 });
 
+//const gatedArr = gatedArrGenerator(gatedPercent, batchArr);
+//logger.info(gatedArr);
+
 ooaWatcher.on('add', function(filePath){
 	let fileName = path.basename(filePath);
 	logger.info('add function');
 	if (ooaConfig.fileType === 'XML'){
-		parseXML(filePath);
+		//parseXML(filePath);
+		const gatedArr = gatedArrGenerator(gatedPercent, batchArr);
+		logger.info(gatedArr);
 	}
 	//else if (ooaConfig.fileType === 'pdf'){
 
